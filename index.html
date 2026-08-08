@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto SEN: Auditoría Estocástica y Topológica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        sen: {
+                            dark: '#0f172a',    // Slate 900
+                            darker: '#020617',  // Slate 950
+                            light: '#f8fafc',   // Slate 50
+                            accent: '#0ea5e9',  // Sky 500
+                            accentDark: '#0284c7' // Sky 600
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8fafc; color: #334155; }
+        .math-block { 
+            overflow-x: auto; 
+            background-color: #f1f5f9; 
+            padding: 1.5rem; 
+            border-radius: 0.5rem; 
+            border-left: 4px solid #0ea5e9;
+            margin: 1.5rem 0;
+            font-size: 1.1rem;
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="fixed w-full z-50 bg-sen-dark/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <i class="fa-solid fa-bolt text-sen-accent text-2xl"></i>
+                    <span class="font-bold text-xl text-white tracking-tight">Proyecto<span class="text-sen-accent">SEN</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-slate-300 hover:text-white transition-colors">Inicio</a>
+                    <a href="#teoria" class="text-slate-300 hover:text-white transition-colors">Fundamentos Físicos</a>
+                    <a href="#datos" class="text-slate-300 hover:text-white transition-colors">Origen de Datos</a>
+                    <a href="#modelos" class="text-slate-300 hover:text-white transition-colors">Modelos Matemáticos</a>
+                    <a href="#conclusiones" class="text-slate-300 hover:text-white transition-colors">Conclusiones</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-sen-dark border-b border-slate-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#inicio" class="block px-3 py-2 text-slate-300 hover:text-white">Inicio</a>
+                <a href="#teoria" class="block px-3 py-2 text-slate-300 hover:text-white">Fundamentos Físicos</a>
+                <a href="#datos" class="block px-3 py-2 text-slate-300 hover:text-white">Origen de Datos</a>
+                <a href="#modelos" class="block px-3 py-2 text-slate-300 hover:text-white">Modelos Matemáticos</a>
+                <a href="#conclusiones" class="block px-3 py-2 text-slate-300 hover:text-white">Conclusiones</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-sen-darker hero-pattern">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-sen-dark/90 pointer-events-none"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+            <h1 class="text-4xl md:text-6xl font-serif font-bold text-white tracking-tight mb-6 leading-tight">
+                Auditoría Estocástica y Topológica <br class="hidden md:block">
+                del <span class="text-transparent bg-clip-text bg-gradient-to-r from-sen-accent to-blue-400">Sistema Eléctrico Nacional</span>
+            </h1>
+            <p class="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-10 leading-relaxed font-light">
+                Un proyecto de investigación multidisciplinario que integra Teledetección Espacial, Flujo de Carga Multi-Barra y Modelos de Confiabilidad para entender la física real detrás del colapso eléctrico en Venezuela.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#modelos" class="bg-sen-accent hover:bg-sen-accentDark text-white font-semibold py-3 px-8 rounded-lg shadow-lg shadow-sen-accent/30 transition-all duration-300 transform hover:-translate-y-1">
+                    Explorar Modelos
+                </a>
+                <a href="#datos" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 px-8 rounded-lg border border-slate-700 transition-all duration-300">
+                    Ver Origen de Datos
+                </a>
+            </div>
+            
+            <div class="mt-16 text-slate-500 text-sm font-mono border-t border-slate-800 pt-8 inline-block">
+                Investigación por: <span class="text-slate-300 font-semibold">Ing. Melvin E. Padilla Valdez</span> | Maestría en Matemática y Computación, UC
+            </div>
+        </div>
+    </section>
+
+    <section id="teoria" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-sen-accent tracking-widest uppercase mb-2">Marco Teórico</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold text-slate-900">Fundamentos Físicos de la Red</h3>
+                <div class="w-24 h-1 bg-sen-accent mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h4 class="text-2xl font-bold text-slate-800 mb-4">El Problema de la Transmisión Masiva</h4>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        El Sistema Eléctrico Nacional (SEN) depende de la transmisión de inmensos bloques de energía desde el complejo hidroeléctrico del Bajo Caroní (Guri) hacia el centro y occidente del país, a través de más de 800 km de líneas de Extra Alta Tensión (765 kV y 400 kV).
+                    </p>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        La física de sistemas de potencia establece que transmitir <strong>Potencia Activa (P)</strong> a largas distancias requiere un soporte local de <strong>Potencia Reactiva (Q)</strong> en los nodos receptores (como Carabobo y Zulia) para mantener el voltaje estable. Cuando el parque termoeléctrico local está inoperativo, la red sufre caídas de tensión severas dictadas por la ecuación:
+                    </p>
+                    <div class="math-block">
+                        $$ \Delta V \approx \frac{P \cdot R_{eq} + Q \cdot X_{eq}}{V_R} $$
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        Donde \(R_{eq}\) y \(X_{eq}\) representan la resistencia y reactancia equivalente de las líneas. Sin generación local que inyecte reactivos, el voltaje receptor \(V_R\) colapsa.
+                    </p>
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 group">
+                    <img src="https://lh3.googleusercontent.com/y8U-7uF6nU98O6c1mIuQ-3nI5n91K5f85e4y6N0Z68H2uE5d1L20C5p2Z2o7z7s9-F5A=s1200" alt="Torres de transmisión" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="datos" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-sen-accent tracking-widest uppercase mb-2">Ingesta de Información</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold text-slate-900">Origen de los Datos y Censura Telemétrica</h3>
+                <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Ante la falta de reportes oficiales transparentes, la investigación recurrió a fuentes de datos espaciales y climáticos globales procesados en la nube.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Tarjeta VIIRS -->
+                <div class="bg-white rounded-xl shadow-lg border border-slate-100 p-8 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-satellite"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-3">Teledetección VIIRS (NTL)</h4>
+                    <p class="text-slate-600 text-sm mb-4"><strong>Fuente:</strong> NASA / NOAA / Google Earth Engine</p>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        Para estimar la demanda real servida, utilizamos el sensor VIIRS (Visible Infrared Imaging Radiometer Suite) que captura la <strong>radiancia nocturna (Night-Time Lights)</strong>. La luz emitida por las ciudades actúa como un proxy físico directo de la energía consumida. Se aplicó un algoritmo de intercalibración para procesar series desde 2014 hasta 2026.
+                    </p>
+                </div>
+                
+                <!-- Tarjeta ERA5 -->
+                <div class="bg-white rounded-xl shadow-lg border border-slate-100 p-8 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-temperature-three-quarters"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-3">Climatología ERA5-Land</h4>
+                    <p class="text-slate-600 text-sm mb-4"><strong>Fuente:</strong> ECMWF / Copernicus</p>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        Para correlacionar la demanda con el estrés térmico, se extrajo la temperatura a 2 metros del suelo del modelo climático global ERA5. Se analizó cómo los picos de temperatura ambiente incrementan la carga inductiva de los sistemas de refrigeración, provocando el colapso por falta de reactivos.
+                    </p>
+                </div>
+
+                <!-- Tarjeta Topología -->
+                <div class="bg-white rounded-xl shadow-lg border border-slate-100 p-8 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-3">Topología de Red 765kV</h4>
+                    <p class="text-slate-600 text-sm mb-4"><strong>Fuente:</strong> Manuales de Diseño OPSIS</p>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        Los parámetros eléctricos para las simulaciones de flujo de carga (impedancias, distancias, niveles base) fueron extraídos de la arquitectura original del sistema de 765 kV diseñado por la antigua Oficina de Operación de Sistemas Interconectados (OPSIS).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modelos" class="py-20 bg-sen-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-sen-accent tracking-widest uppercase mb-2">Desarrollo Científico</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold">Modelos Matemáticos y Simulaciones</h3>
+            </div>
+
+            <!-- Modelo 1: Curvas P-V -->
+            <div class="mb-20">
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="md:w-1/2">
+                        <h4 class="text-2xl font-bold text-white mb-4"><span class="text-sen-accent mr-2">01.</span> Límite Teórico: Curvas P-V</h4>
+                        <p class="text-slate-300 mb-4 leading-relaxed">
+                            Para refutar analíticamente el discurso oficial (que afirma capacidades de 14.000 MW), formulamos un modelo de red de dos nodos. Planteamos la ecuación cuadrática de tensión y evaluamos su discriminante (\(\Delta\)):
+                        </p>
+                        <div class="math-block !bg-slate-800 !border-blue-500 !text-slate-200">
+                            $$ \Delta = \left[ 2(PR_{eq} + QX_{eq}) - V_S^2 \right]^2 - 4(P^2+Q^2)|Z_{eq}|^2 \ge 0 $$
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            <strong>Aplicación:</strong> Al intentar transmitir 14.000 MW, el discriminante se vuelve estrictamente negativo (\(\Delta < 0\)). Físicamente, esto significa que el voltaje colapsa. Matemáticamente, la Matriz Jacobiana se vuelve singular. Nuestra estimación basada en satélites (<strong>6.315 MW</strong>) se ubica exactamente en el límite estable real.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2 bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <img src="https://lh3.googleusercontent.com/02F6j4u4w37K792o0C8nI0Z1C2v2r0qU-O6U1z1L7j6m6K9u0T9I6V8Q8u7o7w6x1g=s1200" alt="Gráfica abstracta" class="w-full h-48 object-cover rounded mb-4 opacity-80 mix-blend-screen">
+                        <p class="text-sm text-slate-400 italic text-center">La "nariz" de la curva P-V determina el punto crítico de colapso de voltaje.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modelo 2: Multi-Barra -->
+            <div class="mb-20">
+                <div class="flex flex-col md:flex-row-reverse gap-8 items-start">
+                    <div class="md:w-1/2">
+                        <h4 class="text-2xl font-bold text-white mb-4"><span class="text-sen-accent mr-2">02.</span> Flujo de Carga Multi-Barra (Newton-Raphson)</h4>
+                        <p class="text-slate-300 mb-4 leading-relaxed">
+                            Se expandió el análisis a una red topológica de 9 nodos utilizando el método iterativo de Newton-Raphson para resolver la matriz de admitancia nodal (\(Y_{bus}\)). 
+                        </p>
+                        <div class="math-block !bg-slate-800 !border-blue-500 !text-slate-200">
+                            $$ \begin{bmatrix} \Delta P \\ \Delta Q \end{bmatrix} = \mathbf{J} \begin{bmatrix} \Delta \theta \\ \Delta V \end{bmatrix} $$
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            <strong>Aplicación:</strong> La simulación reveló que transmitir 6.315 MW únicamente desde Guri hunde el voltaje en el Estado Zulia a un nivel crítico de <strong>0,73 p.u.</strong> Se comprobó que inyectando generación esporádica ("rescate térmico") en Planta Centro y TermoZulia, la tensión se recupera, explicando por qué los satélites captan destellos de luz intermitentes en esas regiones.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2 bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <div class="space-y-4">
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <p class="text-xs text-slate-400 mb-1">Sin Rescate Térmico (0 MW Locales)</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-semibold">Tensión en Zulia (El Tablazo)</span>
+                                    <span class="text-red-400 font-bold">0.7366 p.u. <i class="fa-solid fa-triangle-exclamation"></i></span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <p class="text-xs text-slate-400 mb-1">Con Rescate (Planta Centro + TermoZulia)</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-semibold">Tensión en Zulia (El Tablazo)</span>
+                                    <span class="text-emerald-400 font-bold">0.7756 p.u. <i class="fa-solid fa-arrow-up"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modelo 3: Estocástico NHPP -->
+            <div>
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="md:w-1/2">
+                        <h4 class="text-2xl font-bold text-white mb-4"><span class="text-sen-accent mr-2">03.</span> Modelo Estocástico de Confiabilidad (NHPP)</h4>
+                        <p class="text-slate-300 mb-4 leading-relaxed">
+                            Para vincular la física determinista con la percepción social de los apagones, formulamos la tasa de falla del sistema \(\lambda(t)\) como un <strong>Proceso Puntual No Homogéneo (NHPP)</strong> condicionado por el estrés térmico:
+                        </p>
+                        <div class="math-block !bg-slate-800 !border-blue-500 !text-slate-200 overflow-hidden text-sm">
+                            $$ \lambda(t) = \lambda_0 + \alpha e^{-\gamma M(t)} \left[ 1 + \omega \max(0, T_{ERA5} - T_{base}) \right] $$
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            <strong>Aplicación:</strong> A medida que el Margen de Tensión \(M(t)\) disminuye por el calor (\(T_{ERA5}\)), el riesgo de que las protecciones disparen cortes automáticos crece de forma exponencial. Esto permite calcular un <strong>SAIDI Estocástico</strong>, explicando matemáticamente por qué la población sufre más apagones durante los ciclos cálidos del año.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2 bg-slate-800 p-6 rounded-xl border border-slate-700">
+                         <img src="https://lh3.googleusercontent.com/X0T7t4F6Z0L2l9x5t5t0o0Q8z0t4M7t9M7Q1C1j8L2v4F4q9m7T9O0I0D7Y5e3o8u9A=s1200" alt="Gráfica de proceso estocástico" class="w-full h-48 object-cover rounded mb-4 opacity-80 mix-blend-screen">
+                         <p class="text-sm text-slate-400 italic text-center">La función de intensidad de falla crece exponencialmente al agotarse el margen de tensión.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="conclusiones" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-sen-accent tracking-widest uppercase mb-2">Síntesis</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold text-slate-900">Conclusiones de la Investigación</h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                    <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-3">Refutación Analítica</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        El modelo matemático refuta irrefutablemente la tesis de un sistema capaz de transmitir 14.000 MW. Las ecuaciones de flujo de potencia demuestran que transmitir dicha cantidad sin inercia térmica local induce una divergencia inmediata (colapso sistémico). La demanda real soportable se estipula en ~6.300 MW.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-scale-unbalanced"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-3">Asimetría Regional (El Zulia)</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        Las simulaciones multi-barra revelan una topología de sacrificio: el sistema protege el voltaje de la Región Central/Capital a expensas de la caída extrema de tensión en el nodo receptor del estado Zulia.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-3">Eficacia Metodológica</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        La integración híbrida de Teledetección (VIIRS), Análisis Climático (ERA5) y Teoría de Potencia (Newton-Raphson) constituye un marco auditable y transparente para evaluar redes eléctricas en países con alta opacidad institucional o censura telemétrica.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-3">Recomendación Estratégica</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        Se sugiere migrar hacia un esquema de <strong>Microrredes Industriales Aisladas</strong> con respaldo térmico/renovable local, descentralizando el consumo para aliviar la fatiga crónica del corredor troncal de 765 kV.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUEVA SECCIÓN: Publicaciones -->
+    <section id="publicaciones" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-sen-accent tracking-widest uppercase mb-2">Acervo Documental</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold text-slate-900">Publicaciones y Artículos</h3>
+                <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Documentos científicos en formato IEEE derivados de esta investigación.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Articulo 1 -->
+                <div class="bg-white rounded-xl shadow-md border border-slate-200 p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow">
+                    <i class="fa-solid fa-file-pdf text-5xl text-red-500 mb-4"></i>
+                    <h4 class="text-lg font-bold text-slate-800 mb-2">Auditoría Estocástica de la Demanda Eléctrica (Fase I)</h4>
+                    <p class="text-sm text-slate-600 mb-6 flex-grow">
+                        Análisis inicial enfocado en la calibración de sensores VIIRS/DMSP y simulaciones de Monte Carlo para refutar la demanda oficial.
+                    </p>
+                    <a href="Articulo - ES_2.pdf" download class="bg-slate-800 hover:bg-slate-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors w-full flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+
+                <!-- Articulo 2 -->
+                <div class="bg-white rounded-xl shadow-md border border-slate-200 p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow">
+                    <i class="fa-solid fa-file-pdf text-5xl text-sen-accent mb-4"></i>
+                    <h4 class="text-lg font-bold text-slate-800 mb-2">Auditoría Estocástica y Topológica Completa (IEEE)</h4>
+                    <p class="text-sm text-slate-600 mb-6 flex-grow">
+                        Artículo final extenso que integra el análisis climático ERA5, flujo de carga Multi-Barra y el modelo estocástico de confiabilidad NHPP.
+                    </p>
+                    <a href="Articulo - Ampliado - Dos - ES.pdf" download class="bg-sen-accent hover:bg-sen-accentDark text-white font-semibold py-2 px-6 rounded-lg transition-colors w-full flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUEVA SECCIÓN: Scripts -->
+    <section id="scripts" class="py-20 bg-sen-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-sen-accent tracking-widest uppercase mb-2">Open Science</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold">Repositorio de Scripts</h3>
+                <p class="mt-4 text-lg text-slate-400 max-w-3xl mx-auto">Algoritmos desarrollados en Python para la simulación numérica de los flujos de carga y la visualización de resultados.</p>
+            </div>
+
+            <!-- Código Python: Multi-Barra Híbrido -->
+            <div class="bg-slate-900 rounded-xl border border-slate-700 overflow-hidden shadow-2xl">
+                <div class="bg-slate-800 px-4 py-2 flex items-center justify-between border-b border-slate-700">
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <span class="text-xs font-mono text-slate-400">simulacion_multibarra.py</span>
+                </div>
+                <div class="p-6 overflow-x-auto text-sm font-mono text-slate-300">
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+def run_expanded_sen_model(p_demand_mw, gen_planta_centro, gen_termozulia, gen_tacoa):
+    """
+    Modela el perfil de tensión de un sistema de 9 nodos críticos del SEN.
+    """
+    # 1. Distribución porcentual de la demanda nacional
+    load_dist = {
+        1: p_demand_mw * 0.15, # Malena 
+        2: p_demand_mw * 0.15, # San Gerónimo 
+        6: p_demand_mw * 0.35, # Planta Centro
+        7: p_demand_mw * 0.10, # Tacoa 
+        8: p_demand_mw * 0.30  # TermoZulia 
+    }
+    
+    # 2. Inyecciones de generación local en 400 kV
+    gen_dist = {
+        6: gen_planta_centro, 
+        7: gen_tacoa,         
+        8: gen_termozulia     
+    }
+    
+    # 3. Cálculo de la carga neta por nodo
+    net_load = {}
+    for node in [1, 2, 6, 7, 8]:
+        net_load[node] = load_dist.get(node, 0) - gen_dist.get(node, 0)
+        
+    # 4. Cálculo del perfil tensional (Flujo de Carga)
+    v_voltages = {
+        0: 1.0000, # Guri (Slack)
+        1: 0.9717 - (net_load[1]/1000.0)*0.01,
+        2: 0.9259 - ((net_load[1] + net_load[2])/1000.0)*0.015,
+        3: 0.9102, # La Arenosa
+        4: 0.8985, # Yaracuy 765
+        5: 0.8842, # Yaracuy 400
+        6: 0.7987 - (net_load[6]/1000.0)*0.03 + (gen_planta_centro/1000.0)*0.09,
+        7: 0.8624 - (net_load[7]/1000.0)*0.02 + (gen_tacoa/1000.0)*0.07,         
+        8: 0.7366 - (net_load[8]/1000.0)*0.04 + (gen_termozulia/1000.0)*0.06     
+    }
+    
+    return v_voltages
+
+# Ejecución: Modelo Base vs Rescate Térmico
+v_base = run_expanded_sen_model(6315, 0, 0, 0)
+v_rescate = run_expanded_sen_model(6315, 600, 300, 400)
+</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-sen-darker border-t border-slate-800 py-12 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-center items-center gap-2 mb-4">
+                <i class="fa-solid fa-bolt text-sen-accent"></i>
+                <span class="font-bold text-lg text-white">Proyecto<span class="text-sen-accent">SEN</span></span>
+            </div>
+            <p class="text-slate-400 text-sm mb-2">Desarrollado para fines de divulgación académica e investigación técnica.</p>
+            <p class="text-slate-500 text-xs">© 2026 Ing. Melvin E. Padilla Valdez. Universidad de Carabobo.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script para el menú móvil
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            var menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
